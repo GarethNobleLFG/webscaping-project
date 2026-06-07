@@ -1,0 +1,74 @@
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    restart: always
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    ports:
+      - "9090:9090"
+    depends_on:
+      - api
+
+  grafana:
+    image: grafana/grafana-oss:latest
+    container_name: grafana
+    restart: always
+    ports:
+      - "3005:3000" 
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin 
+    volumes:
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - prometheus
+
+  db:
+    image: postgres:15-alpine
+    restart: always
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${LOCAL_POSTGRES_PASSWORD:-password}
+      POSTGRES_DB: webscaping
+    ports:
+      - "5433:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  api:
+    build: 
+      context: ./api
+      dockerfile: Dockerfile.dev
+    depends_on:
+      - db
+    ports:
+      - "${PORT:-3001}:${PORT:-3001}"
+    env_file:
+      - .env 
+    volumes:
+      - ./api:/app 
+      - /app/node_modules
+    command: npm run dev
+
+  frontend:
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    depends_on:
+      - api
+    ports:
+      - "5174:5174"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+    volumes:
+      - ./frontend:/app 
+      - /app/node_modules
+    command: npm run dev -- --host 0.0.0.0 --port 5174
+
+volumes:
+  pg_data:
+  prometheus_data:
+  grafana_data:
