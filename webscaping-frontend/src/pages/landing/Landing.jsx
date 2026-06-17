@@ -1,38 +1,18 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-    Briefcase,
     ChevronDown,
     Star,
-    Map,
-    Sparkles,
     ShieldCheck,
     Menu,
     X,
 } from 'lucide-react';
 import Hero from './Hero';
+import HowItWorks from './HowItWorks';
 
 export default function Landing() {
     const [activeFaq, setActiveFaq] = useState(null);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-    const steps = [
-        {
-            icon: <Briefcase className="w-8 h-8 text-blue-400" />,
-            title: "1. Create Your Profile",
-            desc: "Register your landscaping company and fill out your service areas, offerings, pricing, and availability."
-        },
-        {
-            icon: <Map className="w-8 h-8 text-blue-400" />,
-            title: "2. Set Your Territory",
-            desc: "Our interactive territorial scoping allows you to claim or map out your specific service routes and service radius."
-        },
-        {
-            icon: <Sparkles className="w-8 h-8 text-blue-400" />,
-            title: "3. Get Dispatched",
-            desc: "Receive organized bookings from residential and commercial clients directly matched within your designated operating zones."
-        }
-    ];
 
     const testimonials = [
         {
@@ -154,31 +134,7 @@ export default function Landing() {
             <Hero />
 
             {/* 2. HOW IT WORKS */}
-            <section id="how-it-works" className="py-24 bg-slate-900/60 border-b border-slate-900">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <span className="text-blue-400 font-bold text-sm tracking-widest uppercase">Operational Workflow</span>
-                    <h2 className="text-3xl sm:text-4xl font-black text-white mt-2 mb-16">How Webscaping Works</h2>
-
-                    <div className="grid md:grid-cols-3 gap-8">
-                        {steps.map((step, idx) => (
-                            <motion.div
-                                key={idx}
-                                className="bg-slate-950 p-8 rounded-2xl shadow-md hover:shadow-xl transition-shadow border border-slate-900 text-left relative"
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.5, delay: idx * 0.1 }}
-                            >
-                                <div className="w-14 h-14 bg-blue-950/80 border border-blue-900/30 rounded-2xl flex items-center justify-center mb-6">
-                                    {step.icon}
-                                </div>
-                                <h3 className="text-xl font-bold text-slate-200 mb-3">{step.title}</h3>
-                                <p className="text-slate-400 text-sm leading-relaxed">{step.desc}</p>
-                            </motion.div>
-                        ))}
-                    </div>
-                </div>
-            </section>
+            <HowItWorks />
 
             {/* 3. TESTIMONIALS */}
             <section id="testimonials" className="py-24 bg-slate-950 relative">
