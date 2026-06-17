@@ -83,17 +83,6 @@ export default function WebsiteOverview() {
                         </div>
                     </motion.div>
                 ))}
-
-                {/* Empty State / Add New Placeholder */}
-                <div className="border-2 border-dashed border-slate-900 rounded-[2.5rem] p-12 flex flex-col items-center justify-center gap-4 text-center">
-                    <div className="w-12 h-12 bg-slate-900 rounded-2xl flex items-center justify-center text-slate-700">
-                        <Plus className="w-6 h-6" />
-                    </div>
-                    <div>
-                        <h4 className="text-slate-500 font-bold">Add another property</h4>
-                        <p className="text-slate-700 text-sm">Scale your business with more locations or specialized service sites.</p>
-                    </div>
-                </div>
             </div>
         </div>
     );
